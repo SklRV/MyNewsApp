@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">MyNewsApp</string>
+    <string name="user_log_on">Вход</string>
+    <string name="user_registration">Регистрация</string>
+    <string name="user_login">Логин</string>
+    <string name="user_email">E-mail</string>
+    <string name="user_password">Пароль</string>
+    <string name="user_repeat_password">Повторите пароль</string>
+    <string name="user_agree">Согласен с правилами</string>
+    <string name="user_registration_click">Зарегестрироваться</string>
+    <string name="user_buttonBack">Вернуться обратно на стартовый экран</string>
+    <string name="user_textSession">Добро пожаловать!</string>
+    <string name="user_exitSession">Выйти (очистить пользователя)</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_news_app">NewsApp</string>
+    <string name="title_home">News</string>
+    <string name="title_dashboard">Today</string>
+    <string name="title_notifications">Following</string>
 </resources>

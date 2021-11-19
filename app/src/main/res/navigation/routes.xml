@@ -26,11 +26,6 @@
             android:id="@+id/action_registrationFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/newsAppFragment"
-        android:name="com.example.mynewsapp.NewsAppFragment"
-        android:label="fragment_news_app"
-        tools:layout="@layout/fragment_news_app" />
     <activity
         android:id="@+id/newsApp"
         android:name="com.example.mynewsapp.NewsApp"

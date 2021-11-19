@@ -1,20 +1,23 @@
 package com.example.mynewsapp.login_and_registration
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.mynewsapp.R
+import room.UserViewModel
 import com.example.mynewsapp.databinding.FragmentRegistrationBinding
 
 class RegistrationFragment : Fragment() {
 
     private var binding: FragmentRegistrationBinding? = null
+    lateinit var userViewModel: UserViewModel
+    lateinit var roomUsername: String
+    lateinit var roomPassword: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,15 +29,15 @@ class RegistrationFragment : Fragment() {
                 .navigate(R.id.action_registrationFragment_to_loginFragment)
         }
 
-        // Проверка при регистрации:
+        userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+
         val userLogin = binding?.userLogin
         val userEmail = binding?.userEmail
         val userPassword = binding?.userPassword
         val userRepeatPassword = binding?.userRepeatPassword
         val switchAgree =  binding?.switchAgree
-        val sharedPreferences : SharedPreferences = requireActivity().getSharedPreferences("newUser", Context.MODE_PRIVATE)
 
-        // Обработка события при нажатия на кнопку:
+        // Проверка при регистрации:
         binding?.userRegistrationClick?.setOnClickListener {
 
             // Если какое-то из полей пустое, оповестим об этом пользователя
@@ -62,10 +65,9 @@ class RegistrationFragment : Fragment() {
                 Toast.makeText(context,"Пароли не совпадают",Toast.LENGTH_LONG).show()
 
             else {
-                sharedPreferences.edit().apply(){
-                    putString("userLogin", userLogin.text.toString())
-                    putString("userPassword", userPassword.text.toString())
-                }.apply()
+                roomUsername = userLogin?.text.toString().trim()
+                roomPassword = userPassword?.text.toString().trim()
+                userViewModel.insert(requireContext(), roomUsername, roomPassword)
                 Toast.makeText(context,"Регистрация прошла успешно!",Toast.LENGTH_LONG).show()
             }
         }

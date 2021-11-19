@@ -5,14 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.example.mynewsapp.databinding.ActivityNewsAppBinding
-import com.example.mynewsapp.databinding.FragmentNewsAppBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
-
 
 class NewsAppFragment : Fragment() {
 

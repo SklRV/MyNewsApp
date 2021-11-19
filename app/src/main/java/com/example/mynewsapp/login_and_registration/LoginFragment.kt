@@ -1,20 +1,23 @@
 package com.example.mynewsapp.login_and_registration
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.mynewsapp.R
+import room.UserViewModel
 import com.example.mynewsapp.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
 
     private var binding: FragmentLoginBinding? = null
+    lateinit var userViewModel: UserViewModel
+    lateinit var roomUsername: String
+    lateinit var roomPassword: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,30 +28,40 @@ class LoginFragment : Fragment() {
             Navigation.findNavController(it).navigate(R.id.action_loginFragment_to_registrationFragment)
         }
 
-        // Проверка перехода в сессию при верном логине и пароле
+        userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+
+        // Проверка верного логина и пароля, переход в сессию
         val adminLogin: String = "admin"
         val adminPassword: String = "admin"
         val userLogin = binding?.userLogin
         val userPassword = binding?.userPassword
-        val sharedPreferences : SharedPreferences = requireActivity().getSharedPreferences("newUser", Context.MODE_PRIVATE)
 
         // Обработка события при нажатия на кнопку:
         binding?.userLogintoClick?.setOnClickListener{
 
-            // Если пользователь уже зарегестрирован:
-            if (userLogin?.text?.toString()?.trim().equals(sharedPreferences.getString("userLogin", null)) &&
-                userPassword?.text?.toString()?.trim().equals(sharedPreferences.getString("userPassword", null)) )
-                Navigation.findNavController(it).navigate(R.id.action_loginFragment_to_newsApp)
+            roomUsername = userLogin?.text.toString().trim()
+            roomPassword = userPassword?.text.toString().trim()
 
-            // Ввели параметры Админа
-            else if (userLogin?.text?.toString()?.trim().equals(adminLogin) &&
-                userPassword?.text?.toString()?.trim().equals(adminPassword) )
-
-            // Переход на страницу Session:
-                Navigation.findNavController(it).navigate(R.id.action_loginFragment_to_newsApp)
-            else {
-                Toast.makeText(context, "Введен неверный логин или пароль", Toast.LENGTH_LONG).show()
-            }
+            userViewModel.getLoginDetails(requireContext(), roomUsername, roomPassword)!!.observe(viewLifecycleOwner,
+                {
+                    if (userLogin?.text?.toString()?.trim().equals(adminLogin) && userPassword?.text?.toString()?.trim().equals(adminPassword))
+                        view?.let { it1 ->
+                            Navigation.findNavController(it1)
+                                .navigate(R.id.action_loginFragment_to_newsApp)
+                        }
+                    else if (it == null){
+                        Toast.makeText(context, "Введен неверный логин или пароль", Toast.LENGTH_LONG).show()
+                        }
+                    else if(it.Password != roomPassword) {
+                        Toast.makeText(context, "Введен неверный пароль", Toast.LENGTH_LONG).show()
+                        }
+                    else {
+                        view?.let { it1 ->
+                            Navigation.findNavController(it1)
+                                .navigate(R.id.action_loginFragment_to_newsApp)
+                        }
+                    }
+                })
         }
         return binding?.root
     }

@@ -1,7 +1,9 @@
 package com.example.mynewsapp.news
 
 import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
+@Serializable
 class News(
     @SerializedName("author") val author: String? = null,
     @SerializedName("title") val title: String? = null,

@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mynewsapp.R
+import com.example.mynewsapp.news.News
 import com.example.mynewsapp.news.NewsAdapter
 import com.example.mynewsapp.news.NewsApiClient
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -40,7 +42,7 @@ class HomeFragment : Fragment() {
                                 columnCount <= 1 -> LinearLayoutManager(context)
                                 else -> GridLayoutManager(context, columnCount)
                             }
-                            adapter = NewsAdapter(movies, R.layout.list_item_news,context)
+                            adapter = NewsAdapter(movies, R.layout.list_item_news,context,::navigateToSingleNew)
                         }
                     }
                 },
@@ -49,6 +51,12 @@ class HomeFragment : Fragment() {
                 }
             )
         return view
+    }
+
+    fun navigateToSingleNew(news: News) {
+        val bundle = Bundle()
+        bundle.putString("news", news.url)
+        findNavController().navigate(R.id.action_navigation_home_to_newsFragment, bundle)
     }
 
     companion object {

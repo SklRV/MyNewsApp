@@ -16,11 +16,13 @@ class NewsAdapter (
     private val news: List<News>,
     private val rowLayout: Int,
     private val context: Context,
+    private val clickOnNews: (News) -> Unit,
 ) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
     class NewsViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         internal var newsTitle: TextView = v.findViewById(R.id.title)
         internal var description: TextView = v.findViewById(R.id.description)
+        internal var newsLayout: ViewGroup= v.findViewById(R.id.news_layout)
         val art: ImageView = v.findViewById(R.id.imageView)
     }
 
@@ -38,11 +40,7 @@ class NewsAdapter (
         holder.description.text = current.description
         val url = current.urlToImage
         Glide.with(context).load(url).into(holder.art)
-        holder.itemView.setOnClickListener {
-            val uri = Uri.parse(current.url)
-            val intent = Intent(Intent.ACTION_VIEW, uri)
-            context.startActivity(intent)
-        }
+        holder.newsLayout.setOnClickListener{clickOnNews.invoke(current)}
     }
 
     override fun getItemCount(): Int {

@@ -18,4 +18,6 @@
     <string name="title_notifications">Following</string>
     <string name="text_dashboard">Meow?</string>
     <string name="text_notifications">Meow!</string>
+    <string name="text_search">Поиск твоих новостей!</string>
+    <string name="text_search_button">Go!</string>
 </resources>

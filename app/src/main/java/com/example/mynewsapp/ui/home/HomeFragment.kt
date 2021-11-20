@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.mynewsapp.R
 import com.example.mynewsapp.databinding.FragmentHomeBinding
 import com.example.mynewsapp.news.News
@@ -23,6 +22,7 @@ class HomeFragment : Fragment() {
 
     private var columnCount = 1
     private var binding: FragmentHomeBinding? = null
+    lateinit var newsSearch: String
 
     @SuppressLint("CheckResult")
     override fun onCreateView(
@@ -30,32 +30,47 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater,container,false)
-        val getTopRatedMovies = NewsApiClient.apiClient.getTopRatedMovies("Pokemon", API_KEY)
+        val startSearch: String = "Pokemon"
+        val wordSearch = binding?.userSearch
 
-        getTopRatedMovies
+        binding?.buttonSearch?.setOnClickListener{
+            if (wordSearch?.text?.toString()?.trim() != ""){
+                newsSearch = wordSearch?.text?.toString()?.trim().toString()
+                findThisNews(newsSearch)
+            }
+        }
+
+        findThisNews(startSearch)
+
+        return binding?.root
+    }
+
+    @SuppressLint("CheckResult")
+    fun findThisNews(newsSearch: String) {
+
+        val getCoolNews = NewsApiClient.apiClient.getTopRatedMovies(newsSearch, API_KEY)
+
+        getCoolNews
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { it ->
-                    val movies = it.articles
-                    if (binding?.root is RecyclerView) {
-                        with(binding?.root) {
-                            this?.layoutManager = when {
-                                columnCount <= 1 -> LinearLayoutManager(context)
-                                else -> GridLayoutManager(context, columnCount)
-                            }
-                            this?.adapter = context?.let { it1 ->
-                                NewsAdapter(movies, R.layout.list_item_news,
-                                    it1,::navigateToSingleNew)
-                            }
+                    val myNews = it.articles
+
+                    with(binding?.list) {
+                        this?.layoutManager = when {
+                            columnCount <= 1 -> LinearLayoutManager(context)
+                            else -> GridLayoutManager(context, columnCount)
+                        }
+                        this?.adapter = context?.let { it1 ->
+                            NewsAdapter(myNews, R.layout.list_item_news,
+                                it1,::navigateToSingleNew)
                         }
                     }
                 },
                 { error ->
                     Log.e(TAG, error.toString())
-                }
-            )
-        return binding?.root
+                })
     }
 
     fun navigateToSingleNew(news: News) {

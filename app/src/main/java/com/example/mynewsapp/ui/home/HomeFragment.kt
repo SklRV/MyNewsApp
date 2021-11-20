@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mynewsapp.R
+import com.example.mynewsapp.databinding.FragmentHomeBinding
 import com.example.mynewsapp.news.News
 import com.example.mynewsapp.news.NewsAdapter
 import com.example.mynewsapp.news.NewsApiClient
@@ -21,13 +22,14 @@ import io.reactivex.schedulers.Schedulers
 class HomeFragment : Fragment() {
 
     private var columnCount = 1
+    private var binding: FragmentHomeBinding? = null
 
     @SuppressLint("CheckResult")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        binding = FragmentHomeBinding.inflate(inflater,container,false)
         val getTopRatedMovies = NewsApiClient.apiClient.getTopRatedMovies("Pokemon", API_KEY)
 
         getTopRatedMovies
@@ -36,13 +38,16 @@ class HomeFragment : Fragment() {
             .subscribe(
                 { it ->
                     val movies = it.articles
-                    if (view is RecyclerView) {
-                        with(view) {
-                            layoutManager = when {
+                    if (binding?.root is RecyclerView) {
+                        with(binding?.root) {
+                            this?.layoutManager = when {
                                 columnCount <= 1 -> LinearLayoutManager(context)
                                 else -> GridLayoutManager(context, columnCount)
                             }
-                            adapter = NewsAdapter(movies, R.layout.list_item_news,context,::navigateToSingleNew)
+                            this?.adapter = context?.let { it1 ->
+                                NewsAdapter(movies, R.layout.list_item_news,
+                                    it1,::navigateToSingleNew)
+                            }
                         }
                     }
                 },
@@ -50,7 +55,7 @@ class HomeFragment : Fragment() {
                     Log.e(TAG, error.toString())
                 }
             )
-        return view
+        return binding?.root
     }
 
     fun navigateToSingleNew(news: News) {

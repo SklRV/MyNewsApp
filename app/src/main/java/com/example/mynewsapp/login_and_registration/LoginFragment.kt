@@ -24,44 +24,55 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentLoginBinding.inflate(inflater,container,false)
-        binding?.registration?.setOnClickListener{
-            Navigation.findNavController(it).navigate(R.id.action_loginFragment_to_registrationFragment)
-        }
-
         userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
-        // Проверка верного логина и пароля, переход в сессию
-        val adminLogin: String = "admin"
-        val adminPassword: String = "admin"
-        val userLogin = binding?.userLogin
-        val userPassword = binding?.userPassword
+        binding?.apply {
 
-        // Обработка события при нажатия на кнопку:
-        binding?.userLogintoClick?.setOnClickListener{
+            registration.setOnClickListener {
+                Navigation.findNavController(it)
+                    .navigate(R.id.action_loginFragment_to_registrationFragment)
+            }
 
-            roomUsername = userLogin?.text.toString().trim()
-            roomPassword = userPassword?.text.toString().trim()
+            // Проверка верного логина и пароля, переход в сессию
+            val adminLogin: String = "admin"
+            val adminPassword: String = "admin"
+            val userLogin = userLogin
+            val userPassword = userPassword
 
-            userViewModel.getLoginDetails(requireContext(), roomUsername, roomPassword)!!.observe(viewLifecycleOwner,
-                {
-                    if (userLogin?.text?.toString()?.trim().equals(adminLogin) && userPassword?.text?.toString()?.trim().equals(adminPassword))
-                        view?.let { it1 ->
-                            Navigation.findNavController(it1)
-                                .navigate(R.id.action_loginFragment_to_newsApp)
-                        }
-                    else if (it == null){
-                        Toast.makeText(context, "Введен неверный логин или пароль", Toast.LENGTH_LONG).show()
-                        }
-                    else if(it.Password != roomPassword) {
-                        Toast.makeText(context, "Введен неверный пароль", Toast.LENGTH_LONG).show()
-                        }
-                    else {
-                        view?.let { it1 ->
-                            Navigation.findNavController(it1)
-                                .navigate(R.id.action_loginFragment_to_newsApp)
-                        }
-                    }
-                })
+            // Обработка события при нажатия на кнопку:
+            userLogintoClick.setOnClickListener {
+
+                roomUsername = userLogin.text.toString().trim()
+                roomPassword = userPassword.text.toString().trim()
+
+                userViewModel.getLoginDetails(requireContext(), roomUsername, roomPassword)!!
+                    .observe(viewLifecycleOwner,
+                        {
+                            if (userLogin.text?.toString()?.trim()
+                                    .equals(adminLogin) && userPassword.text?.toString()?.trim()
+                                    .equals(adminPassword)
+                            )
+                                view?.let { it1 ->
+                                    Navigation.findNavController(it1)
+                                        .navigate(R.id.action_loginFragment_to_newsApp)
+                                }
+                            else if (it == null) {
+                                Toast.makeText(
+                                    context,
+                                    "Введен неверный логин или пароль",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            } else if (it.Password != roomPassword) {
+                                Toast.makeText(context, "Введен неверный пароль", Toast.LENGTH_LONG)
+                                    .show()
+                            } else {
+                                view?.let { it1 ->
+                                    Navigation.findNavController(it1)
+                                        .navigate(R.id.action_loginFragment_to_newsApp)
+                                }
+                            }
+                        })
+            }
         }
         return binding?.root
     }

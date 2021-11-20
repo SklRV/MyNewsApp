@@ -16,4 +16,6 @@
     <string name="title_home">News</string>
     <string name="title_dashboard">Today</string>
     <string name="title_notifications">Following</string>
+    <string name="text_dashboard">Meow?</string>
+    <string name="text_notifications">Meow!</string>
 </resources>

@@ -45,8 +45,8 @@ class LoginFragment : Fragment() {
                 roomUsername = userLogin.text.toString().trim()
                 roomPassword = userPassword.text.toString().trim()
 
-                userViewModel.getLoginDetails(requireContext(), roomUsername, roomPassword)!!
-                    .observe(viewLifecycleOwner,
+                userViewModel.getLoginDetails(requireContext(), roomUsername, roomPassword)
+                    ?.observe(viewLifecycleOwner,
                         {
                             if (userLogin.text?.toString()?.trim()
                                     .equals(adminLogin) && userPassword.text?.toString()?.trim()

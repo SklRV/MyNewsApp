@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">MyNewsApp</string>
+    <string name="title_activity_news_app">NewsApp</string>
+    <!--fragment_login & fragment_registration-->
     <string name="user_log_on">Вход</string>
     <string name="user_registration">Регистрация</string>
     <string name="user_login">Логин</string>
@@ -8,16 +10,14 @@
     <string name="user_repeat_password">Повторите пароль</string>
     <string name="user_agree">Согласен с правилами</string>
     <string name="user_registration_click">Зарегестрироваться</string>
-    <string name="user_buttonBack">Вернуться обратно на стартовый экран</string>
-    <string name="user_textSession">Добро пожаловать!</string>
-    <string name="user_exitSession">Выйти (очистить пользователя)</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_news_app">NewsApp</string>
+    <!--bottom_nav_menu-->
     <string name="title_home">News</string>
     <string name="title_dashboard">Today</string>
     <string name="title_notifications">Following</string>
+    <!--fragment_dashboard & fragment_notifications-->
     <string name="text_dashboard">Meow?</string>
     <string name="text_notifications">Meow!</string>
+    <!--fragment_home-->
     <string name="text_search">Поиск твоих новостей!</string>
     <string name="text_search_button">Go!</string>
 </resources>

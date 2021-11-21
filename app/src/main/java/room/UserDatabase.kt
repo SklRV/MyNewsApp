@@ -17,7 +17,7 @@ abstract class UserDatabase : RoomDatabase() {
             if (INSTANCE != null) return INSTANCE!!
             synchronized(this) {
                 INSTANCE = Room
-                    .databaseBuilder(context, UserDatabase::class.java, "LOGIN_DATABASE")
+                    .databaseBuilder(context, UserDatabase::class.java, "LOGIN_TABLE_DATABASE")
                     .fallbackToDestructiveMigration()
                     .build()
 

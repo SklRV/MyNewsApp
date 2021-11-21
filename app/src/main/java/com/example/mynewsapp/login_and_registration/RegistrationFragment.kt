@@ -63,7 +63,7 @@ class RegistrationFragment : Fragment() {
                     Toast.makeText(context,"Регистрация прошла успешно!",Toast.LENGTH_LONG).show()
                     roomUsername = userLogin.text.toString().trim()
                     roomPassword = userPassword.text.toString().trim()
-                    userViewModel.insert(requireContext(), roomUsername, roomPassword)
+                    userViewModel.insert(requireContext(), id, roomUsername, roomPassword)
                 }
             }
         }

@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 class UserViewModel : ViewModel() {
     var liveDataUser: LiveData<User>? = null
 
-    fun insert(context: Context, username: String, password: String) {
-        UserRepository.insertData(context, username, password)
+    fun insert(context: Context, id: Int, username: String, password: String) {
+        UserRepository.insertData(context, id, username, password)
     }
 
     fun getLoginDetails(context: Context, username: String, password: String) : LiveData<User>? {

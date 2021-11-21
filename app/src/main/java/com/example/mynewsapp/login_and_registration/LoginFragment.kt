@@ -27,7 +27,6 @@ class LoginFragment : Fragment() {
         userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
         with(binding) {
-
             registration.setOnClickListener {
                 Navigation.findNavController(it)
                     .navigate(R.id.action_loginFragment_to_registrationFragment)

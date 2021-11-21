@@ -16,11 +16,3 @@ data class User(
     @ColumnInfo(name = "password")
     var password: String
 )
-/*
-{
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    var Id: Int? = null
-}
-
- */

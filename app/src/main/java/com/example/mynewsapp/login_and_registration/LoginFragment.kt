@@ -14,7 +14,7 @@ import com.example.mynewsapp.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
 
-    private var binding: FragmentLoginBinding? = null
+    lateinit var binding: FragmentLoginBinding
     lateinit var userViewModel: UserViewModel
     lateinit var roomUsername: String
     lateinit var roomPassword: String
@@ -22,11 +22,11 @@ class LoginFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentLoginBinding.inflate(inflater,container,false)
         userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
-        binding?.apply {
+        with(binding) {
 
             registration.setOnClickListener {
                 Navigation.findNavController(it)
@@ -48,36 +48,25 @@ class LoginFragment : Fragment() {
                 userViewModel.getLoginDetails(requireContext(), roomUsername, roomPassword)
                     ?.observe(viewLifecycleOwner,
                         {
-                            if (userLogin.text?.toString()?.trim()
-                                    .equals(adminLogin) && userPassword.text?.toString()?.trim()
-                                    .equals(adminPassword)
-                            )
-                                view?.let { it1 ->
-                                    Navigation.findNavController(it1)
+                            if (userLogin.text?.toString()?.trim().equals(adminLogin) &&
+                                userPassword.text?.toString()?.trim().equals(adminPassword))
+                                view?.let { view ->
+                                    Navigation.findNavController(view)
                                         .navigate(R.id.action_loginFragment_to_newsApp)
                                 }
                             else if (it == null) {
-                                Toast.makeText(
-                                    context,
-                                    "Введен неверный логин или пароль",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                            } else if (it.Password != roomPassword) {
-                                Toast.makeText(context, "Введен неверный пароль", Toast.LENGTH_LONG)
-                                    .show()
+                                Toast.makeText(context,"Введен неверный логин или пароль",Toast.LENGTH_LONG).show()
+                            } else if (it.password != roomPassword) {
+                                Toast.makeText(context, "Введен неверный пароль", Toast.LENGTH_LONG).show()
                             } else {
-                                view?.let { it1 ->
-                                    Navigation.findNavController(it1)
+                                view?.let { view ->
+                                    Navigation.findNavController(view)
                                         .navigate(R.id.action_loginFragment_to_newsApp)
                                 }
                             }
                         })
             }
         }
-        return binding?.root
-    }
-    override fun onDestroyView(){
-        binding = null
-        super.onDestroyView()
+        return binding.root
     }
 }

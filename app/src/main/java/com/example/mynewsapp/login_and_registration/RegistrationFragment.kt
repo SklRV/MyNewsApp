@@ -14,7 +14,7 @@ import com.example.mynewsapp.databinding.FragmentRegistrationBinding
 
 class RegistrationFragment : Fragment() {
 
-    private var binding: FragmentRegistrationBinding? = null
+    lateinit var binding:FragmentRegistrationBinding
     lateinit var userViewModel: UserViewModel
     lateinit var roomUsername: String
     lateinit var roomPassword: String
@@ -22,16 +22,16 @@ class RegistrationFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentRegistrationBinding.inflate(inflater, container, false)
-        binding?.logon?.setOnClickListener {
+        binding.logon.setOnClickListener {
             Navigation.findNavController(it)
                 .navigate(R.id.action_registrationFragment_to_loginFragment)
         }
 
         userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
-        binding?.apply{
+        binding.apply{
             val userLogin = userLogin
             val userEmail = userEmail
             val userPassword = userPassword
@@ -72,10 +72,6 @@ class RegistrationFragment : Fragment() {
                 }
             }
         }
-        return  binding?.root
-    }
-    override fun onDestroyView(){
-        binding = null
-        super.onDestroyView()
+        return  binding.root
     }
 }

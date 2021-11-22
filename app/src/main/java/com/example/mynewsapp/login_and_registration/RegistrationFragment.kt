@@ -80,7 +80,6 @@ class RegistrationFragment : Fragment() {
         dogEmail = userCheckEdit.text?.toString()?.contains("@", ignoreCase = true) != false
     }
 
-
     fun infoCheck(infoCheckEdit: EditText, userCheckInput: TextInputLayout): Boolean {
         var userOk: Boolean = false
         userCheck(infoCheckEdit)
@@ -88,7 +87,7 @@ class RegistrationFragment : Fragment() {
         if (!emptyField) {
             userCheckInput.error = "Пустое поле"
         } else if (!shortWord) {
-            userCheckInput.error = "Количество символов должно быть больше 3х"
+            userCheckInput.error = "Кол-во символов меньше 3х"
         } else {
             userCheckInput.error = null
             userOk = true
@@ -103,7 +102,7 @@ class RegistrationFragment : Fragment() {
         if (!emptyField) {
             emailCheckInput.error = "Пустое поле"
         } else if (!shortWord) {
-            emailCheckInput.error = "Количество символов должно быть больше 3х"
+            emailCheckInput.error = "Кол-во символов меньше 3х"
         } else if (dogEmail == false) {
             emailCheckInput.error = "Не верный e-mail (не хватает @)"
         } else {
@@ -121,7 +120,7 @@ class RegistrationFragment : Fragment() {
         if (!emptyField) {
             repeatCheckInput.error = "Пустое поле"
         } else if (!shortWord) {
-            repeatCheckInput.error = "Количество символов должно быть больше 3х"
+            repeatCheckInput.error = "Кол-во символов меньше 3х"
         } else if (variousPassword == false) {
             repeatCheckInput.error = "Пароли не совпадают"
         } else {

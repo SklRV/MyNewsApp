@@ -6,12 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.mynewsapp.R
 import room.UserViewModel
 import com.example.mynewsapp.databinding.FragmentLoginBinding
+import com.google.android.material.textfield.TextInputLayout
 
 class LoginFragment : Fragment() {
 
@@ -19,6 +21,8 @@ class LoginFragment : Fragment() {
     lateinit var userViewModel: UserViewModel
     lateinit var roomUsername: String
     lateinit var roomPassword: String
+    var emptyField: Boolean = false
+    var shortWord: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,19 +37,21 @@ class LoginFragment : Fragment() {
                     .navigate(R.id.action_loginFragment_to_registrationFragment)
             }
 
-            // Проверка верного логина и пароля, переход в сессию
-            val adminLogin: String = "admin"
-            val adminPassword: String = "admin"
-            val userLogin = userLogin
-            val userPassword = userPassword
-            val passwordEditText = passwordEditText
-            val passwordTextInput = passwordTextInput
-
             // Обработка события при нажатия на кнопку:
             userLogintoClick.setOnClickListener {
+                // Проверка верного логина и пароля, переход в сессию
+                val adminLogin: String = "admin"
+                val adminPassword: String = "admin"
+                val userLogin = userLogin
+                val usernameTextInput = usernameTextInput
+                val userPassword = userPassword
+                val passwordTextInput = passwordTextInput
 
                 roomUsername = userLogin.text.toString().trim()
                 roomPassword = userPassword.text.toString().trim()
+
+                infoCheck(userLogin, usernameTextInput)
+                infoCheck(userPassword, passwordTextInput)
 
                 userViewModel.getLoginDetails(requireContext(), roomUsername, roomPassword)
                     ?.observe(viewLifecycleOwner,
@@ -57,9 +63,9 @@ class LoginFragment : Fragment() {
                                         .navigate(R.id.action_loginFragment_to_newsApp)
                                 }
                             else if (it == null) {
-                                Toast.makeText(context,"Введен неверный логин или пароль",Toast.LENGTH_LONG).show()
+                                usernameTextInput.error = "Введен неверный логин"
                             } else if (it.password != roomPassword) {
-                                Toast.makeText(context, "Введен неверный пароль", Toast.LENGTH_LONG).show()
+                                passwordTextInput.error = "Введен неверный пароль"
                             } else {
                                 view?.let { view ->
                                     Navigation.findNavController(view)
@@ -67,20 +73,25 @@ class LoginFragment : Fragment() {
                                 }
                             }
                         })
-
-                if (!isPasswordValid(passwordEditText.text!!)) {
-                    passwordTextInput.error = "Давай пароль поболее 3х символов"
-                } else {
-                    // Clear the error.
-                    passwordTextInput.error = null
-                }
-
             }
         }
         return binding.root
     }
 
-    private fun isPasswordValid(text: Editable?): Boolean {
-        return text != null && text.length >= 3
+    fun userCheck(userCheckEdit: EditText) {
+        emptyField = !userCheckEdit.text.toString().trim().isEmpty()
+    }
+
+    fun infoCheck(infoCheckEdit: EditText, userCheckInput: TextInputLayout): Boolean {
+        var userOk: Boolean = false
+        userCheck(infoCheckEdit)
+
+        if (!emptyField) {
+            userCheckInput.error = "Пустое поле"
+        } else {
+            userCheckInput.error = null
+            userOk = true
+        }
+        return userOk
     }
 }

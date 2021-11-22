@@ -21,7 +21,7 @@
             android:id="@+id/logon"
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:backgroundTint="@color/background_button"
+            android:backgroundTint="@color/background_butt"
             android:text="@string/user_log_on"
             android:textColor="@color/textColor" />
     </LinearLayout>
@@ -39,7 +39,7 @@
             android:id="@+id/registration"
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:backgroundTint="@color/background_butt"
+            android:backgroundTint="@color/background_button"
             android:text="@string/user_registration"
             android:textColor="@color/white" />
     </LinearLayout>

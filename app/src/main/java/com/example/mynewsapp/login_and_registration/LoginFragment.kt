@@ -1,5 +1,7 @@
 package com.example.mynewsapp.login_and_registration
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import androidx.fragment.app.Fragment
@@ -22,7 +24,6 @@ class LoginFragment : Fragment() {
     lateinit var roomUsername: String
     lateinit var roomPassword: String
     var emptyField: Boolean = false
-    var shortWord: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,49 +33,56 @@ class LoginFragment : Fragment() {
         userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
         with(binding) {
-            registration.setOnClickListener {
-                Navigation.findNavController(it)
-                    .navigate(R.id.action_loginFragment_to_registrationFragment)
-            }
+                registration.setOnClickListener {
+                    Navigation.findNavController(it)
+                        .navigate(R.id.action_loginFragment_to_registrationFragment)
+                }
 
-            // Обработка события при нажатия на кнопку:
-            userLogintoClick.setOnClickListener {
-                // Проверка верного логина и пароля, переход в сессию
-                val adminLogin: String = "admin"
-                val adminPassword: String = "admin"
-                val userLogin = userLogin
-                val usernameTextInput = usernameTextInput
-                val userPassword = userPassword
-                val passwordTextInput = passwordTextInput
+                // Обработка события при нажатия на кнопку:
+                userLogintoClick.setOnClickListener {
+                    // Проверка верного логина и пароля, переход в сессию
+                    val adminLogin: String = "admin"
+                    val adminPassword: String = "admin"
+                    val userLogin = userLogin
+                    val usernameTextInput = usernameTextInput
+                    val userPassword = userPassword
+                    val passwordTextInput = passwordTextInput
+                    val sharedPreferences : SharedPreferences = requireActivity().getSharedPreferences("newUser", Context.MODE_PRIVATE)
 
-                roomUsername = userLogin.text.toString().trim()
-                roomPassword = userPassword.text.toString().trim()
 
-                infoCheck(userLogin, usernameTextInput)
-                infoCheck(userPassword, passwordTextInput)
+                    roomUsername = userLogin.text.toString().trim()
+                    roomPassword = userPassword.text.toString().trim()
 
-                userViewModel.getLoginDetails(requireContext(), roomUsername, roomPassword)
-                    ?.observe(viewLifecycleOwner,
-                        {
-                            if (userLogin.text?.toString()?.trim().equals(adminLogin) &&
-                                userPassword.text?.toString()?.trim().equals(adminPassword))
-                                view?.let { view ->
-                                    Navigation.findNavController(view)
-                                        .navigate(R.id.action_loginFragment_to_newsApp)
+                    infoCheck(userLogin, usernameTextInput)
+                    infoCheck(userPassword, passwordTextInput)
+
+                    userViewModel.getLoginDetails(requireContext(), roomUsername, roomPassword)
+                        ?.observe(viewLifecycleOwner,
+                            {
+                                if (userLogin.text?.toString()?.trim().equals(adminLogin) &&
+                                    userPassword.text?.toString()?.trim().equals(adminPassword)
+                                )
+                                    view?.let { view ->
+                                        Navigation.findNavController(view)
+                                            .navigate(R.id.action_loginFragment_to_newsApp)
+                                    }
+                                else if (it == null) {
+                                    usernameTextInput.error = "Введен неверный логин"
+                                } else if (it.password != roomPassword) {
+                                    passwordTextInput.error = "Введен неверный пароль"
+                                } else {
+                                    sharedPreferences.edit().apply() {
+                                        putString("userLogin", userLogin.text.toString())
+                                        putString("userPassword", userPassword.text.toString())
+                                    }.apply()
+                                    view?.let { view ->
+                                        Navigation.findNavController(view)
+                                            .navigate(R.id.action_loginFragment_to_newsApp)
+                                    }
                                 }
-                            else if (it == null) {
-                                usernameTextInput.error = "Введен неверный логин"
-                            } else if (it.password != roomPassword) {
-                                passwordTextInput.error = "Введен неверный пароль"
-                            } else {
-                                view?.let { view ->
-                                    Navigation.findNavController(view)
-                                        .navigate(R.id.action_loginFragment_to_newsApp)
-                                }
-                            }
-                        })
+                            })
+                }
             }
-        }
         return binding.root
     }
 

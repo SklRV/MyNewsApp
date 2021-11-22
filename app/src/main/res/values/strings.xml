@@ -13,10 +13,15 @@
     <!--bottom_nav_menu-->
     <string name="title_home">News</string>
     <string name="title_dashboard">Today</string>
-    <string name="title_notifications">Following</string>
+    <string name="title_notifications">Profile</string>
     <!--fragment_dashboard & fragment_notifications-->
     <string name="text_dashboard">Meow?</string>
-    <string name="text_notifications">Meow!</string>
+    <string name="your_useraname">Your Useraname:</string>
+    <string name="your_email">Your Email:</string>
+    <string name="your_password">Your Password:</string>
+    <string name="your_xxx">xxx</string>
+    <string name="your_clear">Выйти (очистить пользователя)</string>
+
     <!--fragment_home-->
     <string name="text_search">Поиск твоих новостей!</string>
     <string name="text_search_button">Go!</string>

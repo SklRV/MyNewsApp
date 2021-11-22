@@ -1,5 +1,7 @@
 package com.example.mynewsapp.login_and_registration
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -51,6 +53,7 @@ class RegistrationFragment : Fragment() {
                 val repeatPasswordEdit = repeatPasswordEditText
                 val repeatPasswordTextInput = repeatPasswordTextInput
                 val switchAgree = switchAgree
+                val sharedPreferences : SharedPreferences = requireActivity().getSharedPreferences("newUser", Context.MODE_PRIVATE)
 
                 infoCheck(usernameEdit, usernameTextInput)
                 emailCheck(emailEdit, emailTextInput)
@@ -68,6 +71,9 @@ class RegistrationFragment : Fragment() {
                     roomUsername = usernameEdit.text.toString().trim()
                     roomPassword = passwordEdit.text.toString().trim()
                     userViewModel.insert(requireContext(), id, roomUsername, roomPassword)
+                    sharedPreferences.edit().apply() {putString("userEmail", emailEdit.text.toString())}.apply()
+                    Navigation.findNavController(it)
+                        .navigate(R.id.action_registrationFragment_to_loginFragment)
                 }
             }
         }

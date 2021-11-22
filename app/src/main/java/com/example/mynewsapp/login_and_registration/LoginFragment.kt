@@ -1,6 +1,7 @@
 package com.example.mynewsapp.login_and_registration
 
 import android.os.Bundle
+import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +38,8 @@ class LoginFragment : Fragment() {
             val adminPassword: String = "admin"
             val userLogin = userLogin
             val userPassword = userPassword
+            val passwordEditText = passwordEditText
+            val passwordTextInput = passwordTextInput
 
             // Обработка события при нажатия на кнопку:
             userLogintoClick.setOnClickListener {
@@ -64,8 +67,20 @@ class LoginFragment : Fragment() {
                                 }
                             }
                         })
+
+                if (!isPasswordValid(passwordEditText.text!!)) {
+                    passwordTextInput.error = "Давай пароль поболее 3х символов"
+                } else {
+                    // Clear the error.
+                    passwordTextInput.error = null
+                }
+
             }
         }
         return binding.root
+    }
+
+    private fun isPasswordValid(text: Editable?): Boolean {
+        return text != null && text.length >= 3
     }
 }

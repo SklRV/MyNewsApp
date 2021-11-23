@@ -9,87 +9,59 @@
 
     <TextView
         android:id="@+id/itUseraname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/NotificationsText"
         android:layout_marginTop="50dp"
         android:text="@string/your_useraname"
-        android:textColor="@color/white"
-        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/yourUseraname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/your_xxx"
-        android:textColor="@color/teal_700"
-        android:textStyle="bold|italic"
-        android:textSize="20sp"
+        style="@style/NotificationsUserText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/itUseraname" />
 
     <TextView
         android:id="@+id/itEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        style="@style/NotificationsText"
         android:text="@string/your_email"
-        android:textColor="@color/white"
-        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/yourUseraname" />
 
     <TextView
         android:id="@+id/yourEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/teal_700"
-        android:textStyle="bold|italic"
-        android:textSize="20sp"
-        android:text="@string/your_xxx"
+        style="@style/NotificationsUserText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/itEmail" />
 
     <TextView
         android:id="@+id/itPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        style="@style/NotificationsText"
         android:text="@string/your_password"
-        android:textColor="@color/white"
-        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/yourEmail" />
 
     <TextView
         android:id="@+id/yourPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/teal_700"
-        android:textStyle="bold|italic"
-        android:textSize="20sp"
-        android:text="@string/your_xxx"
+        style="@style/NotificationsUserText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/itPassword"/>
 
     <Button
         android:id="@+id/buttonClear"
+        style="@style/ButtonsLogonRegistration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="@string/your_clear"
         android:backgroundTint="@color/background_button"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/yourPassword" />

@@ -19,11 +19,9 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/logon"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:backgroundTint="@color/background_button"
-            android:text="@string/user_log_on"
-            android:textColor="@color/textColor" />
+            style="@style/ButtonsLogonRegistration"
+            android:backgroundTint="@color/background_butt"
+            android:text="@string/user_log_on"/>
     </LinearLayout>
 
     <LinearLayout
@@ -37,14 +35,12 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/registration"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:backgroundTint="@color/background_butt"
-            android:text="@string/user_registration"
-            android:textColor="@color/white" />
+            style="@style/ButtonsLogonRegistration"
+            android:backgroundTint="@color/background_button"
+            android:text="@string/user_registration"/>
     </LinearLayout>
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switch_agree"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,8 +64,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/username_edit_text"
             style="@style/TextInputEditText"
-            android:hint="@string/user_login"
-            android:inputType="text" />
+            android:hint="@string/user_login" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -82,8 +77,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email_edit_text"
             style="@style/TextInputEditText"
-            android:hint="@string/user_email"
-            android:inputType="text" />
+            android:hint="@string/user_email"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -129,8 +123,10 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/next_button"
+            style="@style/ButtonsLogonRegistration"
             android:layout_width="260dp"
             android:layout_height="50dp"
+            android:textSize="14sp"
             android:text="@string/user_registration_click" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,11 +7,6 @@
         android:title="@string/title_home" />
 
     <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="?attr/actionModePasteDrawable"
-        android:title="@string/title_dashboard" />
-
-    <item
         android:id="@+id/navigation_notifications"
         android:icon="?attr/actionModeCopyDrawable"
         android:title="@string/title_notifications" />

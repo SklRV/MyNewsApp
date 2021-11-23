@@ -15,10 +15,10 @@
         android:layout_marginStart="35dp"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="10dp"
-        android:layout_weight="1"
         android:hint="@string/text_search"
+        android:inputType="text"
         android:maxLength="20"
-        android:maxLines="1"
+        android:singleLine="true"
         android:textColor="@color/textColor"
         android:textColorHint="@color/textColor"
         android:textSize="18sp"
@@ -36,16 +36,15 @@
         app:layout_constraintStart_toEndOf="@+id/userSearch"
         app:layout_constraintTop_toTopOf="parent" />
 
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/list"
-    android:name="com.example.thisismynews.HomeFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    android:layout_marginTop="50dp"
-    app:layoutManager="LinearLayoutManager"
-    tools:context=".ui.home.HomeFragment"
-    tools:listitem="@layout/list_item_news" />
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list"
+        android:name="com.example.thisismynews.HomeFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="50dp"
+        app:layoutManager="LinearLayoutManager"
+        tools:context=".ui.home.HomeFragment"
+        tools:listitem="@layout/list_item_news" />
 </androidx.constraintlayout.widget.ConstraintLayout>

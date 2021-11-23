@@ -8,8 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.Switch
 import android.widget.Toast
+import androidx.appcompat.widget.SwitchCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.mynewsapp.R
@@ -80,13 +80,13 @@ class RegistrationFragment : Fragment() {
         return binding.root
     }
 
-    fun userCheck(userCheckEdit: EditText) {
+    private fun userCheck(userCheckEdit: EditText) {
         shortWord = userCheckEdit.text?.toString()?.length!! >= 3
         emptyField = !userCheckEdit.text.toString().trim().isEmpty()
         dogEmail = userCheckEdit.text?.toString()?.contains("@", ignoreCase = true) != false
     }
 
-    fun infoCheck(infoCheckEdit: EditText, userCheckInput: TextInputLayout): Boolean {
+    private fun infoCheck(infoCheckEdit: EditText, userCheckInput: TextInputLayout): Boolean {
         var userOk: Boolean = false
         userCheck(infoCheckEdit)
 
@@ -101,7 +101,7 @@ class RegistrationFragment : Fragment() {
         return userOk
     }
 
-    fun emailCheck(emailCheckEdit: EditText, emailCheckInput: TextInputLayout): Boolean {
+    private fun emailCheck(emailCheckEdit: EditText, emailCheckInput: TextInputLayout): Boolean {
         var emailOk: Boolean = false
         userCheck(emailCheckEdit)
 
@@ -118,7 +118,7 @@ class RegistrationFragment : Fragment() {
         return emailOk
     }
 
-    fun repeatCheck(repeatCheckEdit: EditText, repeatCheckInput: TextInputLayout, passwordCheckEdit: EditText): Boolean {
+    private fun repeatCheck(repeatCheckEdit: EditText, repeatCheckInput: TextInputLayout, passwordCheckEdit: EditText): Boolean {
         var repeatOk: Boolean = false
         userCheck(repeatCheckEdit)
         variousPassword = repeatCheckEdit.text?.toString() == passwordCheckEdit.text?.toString()
@@ -136,7 +136,7 @@ class RegistrationFragment : Fragment() {
         return repeatOk
     }
 
-    fun switchCheck(switchAgree: Switch): Boolean {
+    private fun switchCheck(switchAgree: SwitchCompat): Boolean {
         var switchOk: Boolean = false
         emptyRules = switchAgree.isChecked.equals(false) != true
 

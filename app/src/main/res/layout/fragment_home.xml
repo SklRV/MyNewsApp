@@ -28,10 +28,12 @@
 
     <Button
         android:id="@+id/buttonSearch"
+        style="@style/ButtonsLogonRegistration"
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
+        android:textSize="16sp"
         android:text="@string/text_search_button"
         app:layout_constraintStart_toEndOf="@+id/userSearch"
         app:layout_constraintTop_toTopOf="parent" />

@@ -13,40 +13,71 @@
         android:layout_width="210dp"
         android:layout_height="50dp"
         android:layout_marginStart="35dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:hint="@string/text_search"
         android:inputType="text"
-        android:maxLength="20"
+        android:maxLength="210"
         android:singleLine="true"
         android:textColor="@color/textColor"
         android:textColorHint="@color/textColor"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/list"
+        android:autofillHints=""
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/textNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="-5dp"
+        android:singleLine="true"
+        android:text="@string/text_textNumber"
+        android:textColor="@color/textColor"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userSearch" />
+
+    <EditText
+        android:id="@+id/userNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="-15dp"
+        android:hint="@string/text_userNumber"
+        android:inputType="number"
+        android:maxLength="1"
+        android:singleLine="true"
+        android:textColor="@color/textColor"
+        android:textColorHint="@color/backgroundColor"
+        android:textSize="14sp"
+        android:autofillHints=""
+        app:layout_constraintStart_toEndOf="@+id/textNumber"
+        app:layout_constraintTop_toBottomOf="@+id/userSearch"/>
 
     <Button
         android:id="@+id/buttonSearch"
         style="@style/ButtonsLogonRegistration"
         android:layout_width="120dp"
         android:layout_height="50dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="25dp"
         android:textSize="16sp"
         android:text="@string/text_search_button"
         app:layout_constraintStart_toEndOf="@+id/userSearch"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
         android:name="com.example.thisismynews.HomeFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="50dp"
-        app:layoutManager="LinearLayoutManager"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textNumber"
         tools:context=".ui.home.HomeFragment"
         tools:listitem="@layout/list_item_news" />
 </androidx.constraintlayout.widget.ConstraintLayout>

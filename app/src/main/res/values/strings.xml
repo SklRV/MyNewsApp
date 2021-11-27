@@ -25,4 +25,6 @@
     <!--fragment_home-->
     <string name="text_search">Поиск твоих новостей!</string>
     <string name="text_search_button">Go!</string>
+    <string name="text_textNumber">Страница (от 1 до 5):</string>
+    <string name="text_userNumber">1</string>
 </resources>

@@ -53,28 +53,39 @@ class RegistrationFragment : Fragment() {
                 val repeatPasswordEdit = repeatPasswordEditText
                 val repeatPasswordTextInput = repeatPasswordTextInput
                 val switchAgree = switchAgree
+                roomUsername = usernameEdit.text.toString().trim()
+                roomPassword = passwordEdit.text.toString().trim()
                 val sharedPreferences : SharedPreferences = requireActivity().getSharedPreferences("newUser", Context.MODE_PRIVATE)
 
-                infoCheck(usernameEdit, usernameTextInput)
-                emailCheck(emailEdit, emailTextInput)
-                infoCheck(passwordEdit, passwordTextInput)
-                repeatCheck(repeatPasswordEdit, repeatPasswordTextInput, passwordEdit)
-                switchCheck(switchAgree)
+                userViewModel.getLoginDetails(requireContext(), roomUsername, roomPassword)
+                    ?.observe(viewLifecycleOwner,
+                        {user ->
+                            infoCheck(usernameEdit, usernameTextInput)
+                            emailCheck(emailEdit, emailTextInput)
+                            infoCheck(passwordEdit, passwordTextInput)
+                            repeatCheck(repeatPasswordEdit, repeatPasswordTextInput, passwordEdit)
+                            switchCheck(switchAgree)
 
-                if (infoCheck(usernameEdit, usernameTextInput) &&
-                    infoCheck(passwordEdit, passwordTextInput) &&
-                    emailCheck(emailEdit, emailTextInput) &&
-                    repeatCheck(repeatPasswordEdit, repeatPasswordTextInput, passwordEdit)
-                    && switchCheck(switchAgree)
-                ) {
-                    Toast.makeText(context, "Регистрация прошла успешно!", Toast.LENGTH_LONG).show()
-                    roomUsername = usernameEdit.text.toString().trim()
-                    roomPassword = passwordEdit.text.toString().trim()
-                    userViewModel.insert(requireContext(), id, roomUsername, roomPassword)
-                    sharedPreferences.edit().apply() {putString("userEmail", emailEdit.text.toString())}.apply()
-                    Navigation.findNavController(it)
-                        .navigate(R.id.action_registrationFragment_to_loginFragment)
-                }
+                            if (user != null) {
+                                if (user.username == roomUsername) {
+                                    usernameTextInput.error = "Такой юзер уже существует"
+                                }
+                            } else if (
+                                infoCheck(usernameEdit, usernameTextInput) &&
+                                infoCheck(passwordEdit, passwordTextInput) &&
+                                emailCheck(emailEdit, emailTextInput) &&
+                                repeatCheck(repeatPasswordEdit, repeatPasswordTextInput, passwordEdit) &&
+                                switchCheck(switchAgree)
+                            ) {
+                                Toast.makeText(context, "Регистрация прошла успешно!", Toast.LENGTH_LONG).show()
+                                roomUsername = usernameEdit.text.toString().trim()
+                                roomPassword = passwordEdit.text.toString().trim()
+                                userViewModel.insert(requireContext(), id, roomUsername, roomPassword)
+                                sharedPreferences.edit().apply() {putString("userEmail", emailEdit.text.toString())}.apply()
+                                Navigation.findNavController(it)
+                                    .navigate(R.id.action_registrationFragment_to_loginFragment)
+                            }
+                        })
             }
         }
         return binding.root
@@ -89,7 +100,6 @@ class RegistrationFragment : Fragment() {
     private fun infoCheck(infoCheckEdit: EditText, userCheckInput: TextInputLayout): Boolean {
         var userOk: Boolean = false
         userCheck(infoCheckEdit)
-
         if (!emptyField) {
             userCheckInput.error = "Пустое поле"
         } else if (!shortWord) {
@@ -104,12 +114,11 @@ class RegistrationFragment : Fragment() {
     private fun emailCheck(emailCheckEdit: EditText, emailCheckInput: TextInputLayout): Boolean {
         var emailOk: Boolean = false
         userCheck(emailCheckEdit)
-
         if (!emptyField) {
             emailCheckInput.error = "Пустое поле"
         } else if (!shortWord) {
             emailCheckInput.error = "Кол-во символов меньше 3х"
-        } else if (dogEmail == false) {
+        } else if (!dogEmail) {
             emailCheckInput.error = "Не верный e-mail (не хватает @)"
         } else {
             emailCheckInput.error = null
@@ -122,12 +131,11 @@ class RegistrationFragment : Fragment() {
         var repeatOk: Boolean = false
         userCheck(repeatCheckEdit)
         variousPassword = repeatCheckEdit.text?.toString() == passwordCheckEdit.text?.toString()
-
         if (!emptyField) {
             repeatCheckInput.error = "Пустое поле"
         } else if (!shortWord) {
             repeatCheckInput.error = "Кол-во символов меньше 3х"
-        } else if (variousPassword == false) {
+        } else if (!variousPassword) {
             repeatCheckInput.error = "Пароли не совпадают"
         } else {
             repeatCheckInput.error = null
@@ -139,7 +147,6 @@ class RegistrationFragment : Fragment() {
     private fun switchCheck(switchAgree: SwitchCompat): Boolean {
         var switchOk: Boolean = false
         emptyRules = switchAgree.isChecked.equals(false) != true
-
         if (!emptyRules) {
             Toast.makeText(context, "Вы не согласились с правилами", Toast.LENGTH_LONG).show()
         } else {

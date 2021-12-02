@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.example.mynewsapp.R
@@ -33,9 +32,8 @@ class NotificationsFragment : Fragment() {
 
         binding.buttonClear.setOnClickListener{
             clear()
-            Navigation.findNavController(it).navigate(R.id.action_navigation_notifications_to_loginFragment)
+            Navigation.findNavController(it).navigate(R.id.action_navigation_notifications_to_mainActivity)
         }
-
         return binding.root
     }
 

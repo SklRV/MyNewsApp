@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,6 +24,11 @@ class HomeFragment : Fragment() {
     private var columnCount = 1
     private var binding: FragmentHomeBinding? = null
     lateinit var newsSearch: String
+    private var pageSearch: Int = 1
+    private var wordFull: Boolean = false
+    private var pageFull: Boolean = false
+    private var wordpageFull: Boolean = false
+    private var wordpageBlank: Boolean = false
 
     @SuppressLint("CheckResult")
     override fun onCreateView(
@@ -30,25 +36,40 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater,container,false)
-        val startSearch: String = "Pokemon"
+        val startSearch: String = "Lego"
         val wordSearch = binding?.userSearch
+        val startPage: Int = 1
+        val userPage = binding?.userNumber
 
         binding?.buttonSearch?.setOnClickListener{
-            if (wordSearch?.text?.toString()?.trim() != ""){
-                newsSearch = wordSearch?.text?.toString()?.trim().toString()
-                findThisNews(newsSearch)
+            newsPages(wordSearch, userPage)
+            when {
+                wordFull -> {
+                    newsSearch = wordSearch?.text?.toString()?.trim().toString()
+                    findThisNews(newsSearch, startPage)
+                }
+                pageFull -> {
+                    pageSearch = userPage?.text.toString().toInt()
+                    findThisNews(startSearch, pageSearch)
+                }
+                wordpageFull -> {
+                    newsSearch = wordSearch?.text?.toString()?.trim().toString()
+                    pageSearch = userPage?.text.toString().toInt()
+                    findThisNews(newsSearch, pageSearch)
+                }
+                wordpageBlank -> {
+                    findThisNews(startSearch, startPage)
+                }
             }
         }
-
-        findThisNews(startSearch)
-
+        findThisNews(startSearch, startPage)
         return binding?.root
     }
 
     @SuppressLint("CheckResult")
-    fun findThisNews(newsSearch: String) {
+    fun findThisNews(newsSearch: String, pageSearch: Int) {
 
-        val getCoolNews = NewsApiClient.apiClient.getTopRatedMovies(newsSearch, API_KEY)
+        val getCoolNews = NewsApiClient.apiClient.getTopNews(newsSearch, API_KEY,LANGUAGE_KEY, pageSearch)
 
         getCoolNews
             .subscribeOn(Schedulers.io())
@@ -73,14 +94,22 @@ class HomeFragment : Fragment() {
                 })
     }
 
-    fun navigateToSingleNew(news: News) {
+    private fun navigateToSingleNew(news: News) {
         val bundle = Bundle()
         bundle.putString("news", news.url)
         findNavController().navigate(R.id.action_navigation_home_to_newsFragment, bundle)
     }
 
+    private fun newsPages(wordSearch: EditText?, userPage: EditText?) {
+        wordFull = wordSearch?.text?.toString()?.trim() != "" && userPage?.text?.toString() == ""
+        pageFull = wordSearch?.text?.toString()?.trim() == "" && userPage?.text?.toString() != ""
+        wordpageFull = wordSearch?.text?.toString()?.trim() != "" && userPage?.text?.toString() != ""
+        wordpageBlank = wordSearch?.text?.toString()?.trim() == "" && userPage?.text?.toString() == ""
+    }
+
     companion object {
         private val TAG = HomeFragment::class.java.simpleName
         private const val API_KEY = "4e9df8dd3f724dd780844ff8cb17d203"
+        private const val LANGUAGE_KEY = "ru"
     }
 }

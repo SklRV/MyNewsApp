@@ -19,11 +19,9 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/logon"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:backgroundTint="@color/background_butt"
-            android:text="@string/user_log_on"
-            android:textColor="@color/textColor" />
+            style="@style/ButtonsLogonRegistration"
+            android:backgroundTint="@color/background_button"
+            android:text="@string/user_log_on"/>
     </LinearLayout>
 
     <LinearLayout
@@ -37,11 +35,9 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/registration"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:backgroundTint="@color/background_button"
-            android:text="@string/user_registration"
-            android:textColor="@color/white" />
+            style="@style/ButtonsLogonRegistration"
+            android:backgroundTint="@color/background_butt"
+            android:text="@string/user_registration"/>
     </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -79,15 +75,17 @@
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="466dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/password_text_input">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/user_loginto_click"
+            style="@style/ButtonsLogonRegistration"
             android:layout_width="260dp"
             android:layout_height="50dp"
-            android:text="@string/user_log_on" />
+            android:text="@string/user_log_in"
+            android:textSize="14sp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

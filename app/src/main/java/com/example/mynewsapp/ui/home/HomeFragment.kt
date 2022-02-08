@@ -30,7 +30,6 @@ class HomeFragment : Fragment() {
     private var wordpageFull: Boolean = false
     private var wordpageBlank: Boolean = false
 
-    @SuppressLint("CheckResult")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

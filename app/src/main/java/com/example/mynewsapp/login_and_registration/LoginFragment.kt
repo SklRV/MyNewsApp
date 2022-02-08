@@ -35,9 +35,7 @@ class LoginFragment : Fragment() {
                     .navigate(R.id.action_loginFragment_to_registrationFragment)
             }
 
-            // Обработка события при нажатия на кнопку:
             userLogintoClick.setOnClickListener {
-                // Проверка верного логина и пароля, переход в сессию
                 val adminLogin: String = "admin"
                 val adminPassword: String = "admin"
                 val userLogin = userLogin.text.toString().trim()

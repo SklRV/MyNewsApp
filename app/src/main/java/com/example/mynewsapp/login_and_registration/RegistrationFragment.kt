@@ -42,7 +42,6 @@ class RegistrationFragment : Fragment() {
         }
 
         binding.apply {
-
             nextButton.setOnClickListener {
                 val usernameEdit = usernameEditText
                 val usernameTextInput = usernameTextInput

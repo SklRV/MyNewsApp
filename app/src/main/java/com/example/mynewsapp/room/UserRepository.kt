@@ -12,7 +12,7 @@ class UserRepository {
         var userDatabase: UserDatabase? = null
         var userTableModel: LiveData<User>? = null
 
-        fun initializeDB(context: Context) : UserDatabase {
+        private fun initializeDB(context: Context) : UserDatabase {
             return UserDatabase.getDataseClient(context)
         }
 

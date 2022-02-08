@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object NewsApiClient {
 
-    const val BASE_URL = "https://newsapi.org/v2/"
+    private const val BASE_URL = "https://newsapi.org/v2/"
 
     val apiClient: NewsApiInterface by lazy {
         val retrofit = Retrofit.Builder()

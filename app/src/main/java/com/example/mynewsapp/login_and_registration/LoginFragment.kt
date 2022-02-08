@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.mynewsapp.R
-import room.UserViewModel
+import com.example.mynewsapp.room.UserViewModel
 import com.example.mynewsapp.databinding.FragmentLoginBinding
 import com.google.android.material.textfield.TextInputLayout
 
@@ -53,30 +53,30 @@ class LoginFragment : Fragment() {
                 infoCheck(userPassword, passwordTextInput)
 
                 userViewModel.getLoginDetails(requireContext(), roomUsername, roomPassword)
-                    ?.observe(viewLifecycleOwner,
-                        {
-                            if (userLogin == adminLogin &&
-                                userPassword == adminPassword)
-                            {
-                                view?.let { view ->
-                                    Navigation.findNavController(view)
-                                        .navigate(R.id.action_loginFragment_to_newsApp)
-                                }
-                            } else if (it == null) {
-                                usernameTextInput.error = "Введен неверный логин"
-                            } else if (it.password != roomPassword) {
-                                passwordTextInput.error = "Введен неверный пароль"
-                            } else {
-                                sharedPreferences.edit().apply() {
-                                    putString("userLogin", userLogin)
-                                    putString("userPassword", userPassword)
-                                }.apply()
-                                view?.let { view ->
-                                    Navigation.findNavController(view)
-                                        .navigate(R.id.action_loginFragment_to_newsApp)
-                                }
+                    ?.observe(viewLifecycleOwner
+                    ) {
+                        if (userLogin == adminLogin &&
+                            userPassword == adminPassword
+                        ) {
+                            view?.let { view ->
+                                Navigation.findNavController(view)
+                                    .navigate(R.id.action_loginFragment_to_newsApp)
                             }
-                        })
+                        } else if (it == null) {
+                            usernameTextInput.error = "Введен неверный логин"
+                        } else if (it.password != roomPassword) {
+                            passwordTextInput.error = "Введен неверный пароль"
+                        } else {
+                            sharedPreferences.edit().apply() {
+                                putString("userLogin", userLogin)
+                                putString("userPassword", userPassword)
+                            }.apply()
+                            view?.let { view ->
+                                Navigation.findNavController(view)
+                                    .navigate(R.id.action_loginFragment_to_newsApp)
+                            }
+                        }
+                    }
             }
         }
         return binding.root

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyNewsApp</string>
+    <string name="app_name">Lego News!</string>
     <string name="title_activity_news_app">NewsApp</string>
     <!--fragment_login & fragment_registration-->
     <string name="user_log_on">Вход</string>

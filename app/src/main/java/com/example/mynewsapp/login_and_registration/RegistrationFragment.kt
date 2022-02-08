@@ -13,7 +13,7 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.mynewsapp.R
-import room.UserViewModel
+import com.example.mynewsapp.room.UserViewModel
 import com.example.mynewsapp.databinding.FragmentRegistrationBinding
 import com.google.android.material.textfield.TextInputLayout
 
@@ -58,34 +58,44 @@ class RegistrationFragment : Fragment() {
                 val sharedPreferences : SharedPreferences = requireActivity().getSharedPreferences("newUser", Context.MODE_PRIVATE)
 
                 userViewModel.getLoginDetails(requireContext(), roomUsername, roomPassword)
-                    ?.observe(viewLifecycleOwner,
-                        {user ->
-                            infoCheck(usernameEdit, usernameTextInput)
-                            emailCheck(emailEdit, emailTextInput)
-                            infoCheck(passwordEdit, passwordTextInput)
-                            repeatCheck(repeatPasswordEdit, repeatPasswordTextInput, passwordEdit)
-                            switchCheck(switchAgree)
+                    ?.observe(viewLifecycleOwner
+                    ) { user ->
+                        infoCheck(usernameEdit, usernameTextInput)
+                        emailCheck(emailEdit, emailTextInput)
+                        infoCheck(passwordEdit, passwordTextInput)
+                        repeatCheck(repeatPasswordEdit, repeatPasswordTextInput, passwordEdit)
+                        switchCheck(switchAgree)
 
-                            if (user != null) {
-                                if (user.username == roomUsername) {
-                                    usernameTextInput.error = "Такой юзер уже существует"
-                                }
-                            } else if (
-                                infoCheck(usernameEdit, usernameTextInput) &&
-                                infoCheck(passwordEdit, passwordTextInput) &&
-                                emailCheck(emailEdit, emailTextInput) &&
-                                repeatCheck(repeatPasswordEdit, repeatPasswordTextInput, passwordEdit) &&
-                                switchCheck(switchAgree)
-                            ) {
-                                Toast.makeText(context, "Регистрация прошла успешно!", Toast.LENGTH_LONG).show()
-                                roomUsername = usernameEdit.text.toString().trim()
-                                roomPassword = passwordEdit.text.toString().trim()
-                                userViewModel.insert(requireContext(), id, roomUsername, roomPassword)
-                                sharedPreferences.edit().apply() {putString("userEmail", emailEdit.text.toString())}.apply()
-                                Navigation.findNavController(it)
-                                    .navigate(R.id.action_registrationFragment_to_loginFragment)
+                        if (user != null) {
+                            if (user.username == roomUsername) {
+                                usernameTextInput.error = "Такой юзер уже существует"
                             }
-                        })
+                        } else if (
+                            infoCheck(usernameEdit, usernameTextInput) &&
+                            infoCheck(passwordEdit, passwordTextInput) &&
+                            emailCheck(emailEdit, emailTextInput) &&
+                            repeatCheck(
+                                repeatPasswordEdit,
+                                repeatPasswordTextInput,
+                                passwordEdit
+                            ) &&
+                            switchCheck(switchAgree)
+                        ) {
+                            Toast.makeText(
+                                context,
+                                "Регистрация прошла успешно!",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            roomUsername = usernameEdit.text.toString().trim()
+                            roomPassword = passwordEdit.text.toString().trim()
+                            userViewModel.insert(requireContext(), id, roomUsername, roomPassword)
+                            sharedPreferences.edit()
+                                .apply() { putString("userEmail", emailEdit.text.toString()) }
+                                .apply()
+                            Navigation.findNavController(it)
+                                .navigate(R.id.action_registrationFragment_to_loginFragment)
+                        }
+                    }
             }
         }
         return binding.root
